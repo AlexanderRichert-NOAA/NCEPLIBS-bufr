@@ -49,6 +49,7 @@ C>
 
       USE MODA_MSGCWD
       USE MODA_TABLES
+      use subroutine_readmg
 
       CHARACTER*8  SUBSET
 

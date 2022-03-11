@@ -86,6 +86,7 @@ C>
       USE MODA_TABLES
       use subroutine_closbf
       use subroutine_openbf
+      use function_ireadmg
 
       COMMON /USRSTR/ NNOD,NCON,NODS(20),NODC(10),IVLS(10),KONS(10)
       COMMON /ACMODE/ IAC
@@ -161,7 +162,7 @@ C  -------------------------------------------------------------
 C  COME HERE FOR COUNT ONLY OPTION (OUTPUT ARRAY VALUES REMAIN MISSING)
 C  --------------------------------------------------------------------
 
-         DO WHILE(IREADMG(-LUNIT,SUBSET,IDATE).GE.0)
+         DO WHILE(IREADMG(-LUNIT,SUBSET,JDATE).GE.0)
          IRET = IRET+NMSUB(LUNIT)
          ENDDO
          GOTO 25

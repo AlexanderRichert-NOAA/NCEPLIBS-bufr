@@ -173,9 +173,9 @@ function ireadmg_c(bufr_unit, c_subset, iddate, subset_str_len) result(ires) bin
   integer(c_int), value, intent(in) :: subset_str_len
   integer(c_int) :: ires
   character(len=25) :: f_subset
-  integer :: ireadmg
+  integer :: ireadmg_body
 
-  ires = ireadmg(bufr_unit, f_subset, iddate)
+  ires = ireadmg_body(bufr_unit, f_subset, iddate)
   call copy_f_c_str(f_subset, c_subset, int(subset_str_len))
 end function ireadmg_c
 

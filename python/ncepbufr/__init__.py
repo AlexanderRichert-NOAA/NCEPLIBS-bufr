@@ -302,7 +302,7 @@ class open:
             >>>     # processing code for each message here
 
         """
-        subset, idate, iret = _bufrlib.readmg(self.lunit)
+        subset, idate, iret = _bufrlib.readmg_body(self.lunit)
         if iret:
             return iret
         else:

@@ -20,7 +20,7 @@ program split_by_subset
   character(len=8) :: subset, sub(maxsub)
   integer(4), dimension(3, maxsub) :: ninv
   integer(4) :: idate
-  integer(4) :: ireadmg, nmsub, iupvs01 !> functions from bufr library
+  integer(4) :: nmsub, iupvs01 !> functions from bufr library
   integer :: nsub, isub, ii, jj
   logical :: file_exists
   integer, dimension(maxsub) :: lsubunit

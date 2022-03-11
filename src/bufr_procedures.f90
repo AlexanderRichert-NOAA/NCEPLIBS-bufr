@@ -12,6 +12,8 @@ module bufr_procedures
   use subroutine_openbf
   use subroutine_openmb
   use subroutine_openmg
+  use subroutine_readmg
+  use function_ireadmg
   use subroutine_ufbint
   use subroutine_ufbrep
   use subroutine_upftbv

@@ -74,6 +74,7 @@ C>
       USE MODA_BITBUF
       use subroutine_closbf
       use subroutine_openbf
+      use subroutine_readmg
       use subroutine_ufbint
 
       CHARACTER*(*) STR
