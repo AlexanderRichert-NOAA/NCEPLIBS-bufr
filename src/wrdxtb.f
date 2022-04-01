@@ -35,6 +35,10 @@ C>                               Also called by application programs.
 C>
       SUBROUTINE WRDXTB(LUNDX,LUNOT)
 
+      use subroutine_getlens
+      use subroutine_msgwrt
+      use function_iupb
+
       USE MODA_TABABD
       USE MODA_MGWA
 

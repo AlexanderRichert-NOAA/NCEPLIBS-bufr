@@ -56,8 +56,6 @@
 #define ipkm	   ipkm_
 #define ireadns    ireadns_
 #define istdesc	   istdesc_
-#define iupb       iupb_
-#define iupbs01	   iupbs01_
 #define iupm	   iupm_
 #define maxout     maxout_
 #define nemtab	   nemtab_
@@ -122,8 +120,6 @@ f77int imrkopr( char *, size_t );
 void ipkm( char *, f77int *, f77int *, size_t );
 f77int ireadns( f77int *, char *, f77int *, size_t );
 f77int istdesc( f77int * );
-f77int iupb( f77int *, f77int *, f77int * );
-f77int iupbs01 ( f77int *, char *, size_t );
 f77int iupm ( char *, f77int *, size_t );
 void maxout( f77int * );
 void nemtab( f77int *, char *, f77int *, char *, f77int *, size_t, size_t );

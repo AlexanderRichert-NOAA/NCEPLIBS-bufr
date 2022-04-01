@@ -49,8 +49,11 @@ C>
       SUBROUTINE DATEBF(LUNIT,MEAR,MMON,MDAY,MOUR,IDATE)
 
       USE MODA_MGWA
+
       use subroutine_closbf
       use subroutine_openbf
+      use function_igetdate
+      use function_idxmsg
 
       COMMON /QUIET / IPRT
 

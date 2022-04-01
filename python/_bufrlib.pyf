@@ -1203,11 +1203,11 @@ function iupb(mbay,nbyt,nbit) ! in iupb.f
     integer :: nbit
     integer :: iupb
 end function iupb
-function iupbs01(mbay,s01mnem) ! in iupbs01.f
+function iupbs01_body(mbay,s01mnem) ! in iupbs01.f90
     integer dimension(*) :: mbay
     character*(*) :: s01mnem
-    integer :: iupbs01
-end function iupbs01
+    integer :: iupbs01_body
+end function iupbs01_body
 function iupbs3(mbay,s3mnem) ! in iupbs3.f
     integer dimension(*) :: mbay
     character*(*) :: s3mnem

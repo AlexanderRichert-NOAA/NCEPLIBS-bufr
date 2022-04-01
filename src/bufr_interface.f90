@@ -28,6 +28,8 @@ module bufr_c_interface_mod
   public :: ufbint_c
   public :: ufbrep_c
   public :: mtinfo_c
+  public :: iupbs01_c
+  public :: iupb_c
 
 contains
 
@@ -167,15 +169,16 @@ end subroutine exitbufr_c
 !> @param[in] subset_str_len - c_int: length of the subset string
 !>
 function ireadmg_c(bufr_unit, c_subset, iddate, subset_str_len) result(ires) bind(C, name='ireadmg_f')
+  use function_ireadmg
+
   integer(c_int), value, intent(in) :: bufr_unit
   character(kind=c_char, len=1), intent(inout) :: c_subset(*)
   integer(c_int), intent(out) :: iddate
   integer(c_int), value, intent(in) :: subset_str_len
   integer(c_int) :: ires
   character(len=25) :: f_subset
-  integer :: ireadmg_body
 
-  ires = ireadmg_body(bufr_unit, f_subset, iddate)
+  ires = ireadmg(bufr_unit, f_subset, iddate)
   call copy_f_c_str(f_subset, c_subset, int(subset_str_len))
 end function ireadmg_c
 
@@ -202,10 +205,10 @@ end function ireadsb_c
 !> @brief Wraps BUFRLIB "ufbint" function.
 !>
 !> @param[in] bufr_unit - c_int: the fortran file unit number to read from
-!> @param[inout] c_data - c_ptr: c style pointer to a pre-allocated buffer
+!> @param[inout] c_data - c_ptr: C-style pointer to a pre-allocated buffer
 !> @param[in] dim_1, dim_2 - c_int: dimensionality of data to read or write
 !> @param[out] iret - c_int: return value, length of data read
-!> @param[in] table_b_mnemonic - c_char: string of mnemonics
+!> @param[in] table_b_mnemonic - c_char: string of Table B mnemonics
 !>
 subroutine ufbint_c(bufr_unit, c_data, dim_1, dim_2, iret, table_b_mnemonic) bind(C, name='ufbint_f')
   integer(c_int), value, intent(in) :: bufr_unit
@@ -226,10 +229,10 @@ end subroutine ufbint_c
 !> @brief Wraps BUFRLIB "ufbrep" function.
 !>
 !> @param[in] bufr_unit - c_int: the fortran file unit number to read from
-!> @param[inout] c_data - c_ptr: c style pointer to a pre-allocated buffer
+!> @param[inout] c_data - c_ptr: C-style pointer to a pre-allocated buffer
 !> @param[in] dim_1, dim_2 - c_int: dimensionality of data to read or write
 !> @param[out] iret - c_int: return value, length of data read
-!> @param[in] table_b_mnemonic - c_char: string of mnemonics
+!> @param[in] table_b_mnemonic - c_char: string of Table B mnemonics
 !>
 subroutine ufbrep_c(bufr_unit, c_data, dim_1, dim_2, iret, table_b_mnemonic) bind(C, name='ufbrep_f')
   integer(c_int), value, intent(in) :: bufr_unit
@@ -260,5 +263,47 @@ subroutine mtinfo_c(path, file_unit_1, file_unit_2) bind(C, name='mtinfo_f')
 
   call mtinfo(c_f_string(path), file_unit_1, file_unit_2)
 end subroutine mtinfo_c
+
+
+!> @author Jeff Ator
+!> @date 2022-02-01
+!>
+!> @brief Wraps BUFRLIB "iupbs01" subroutine.
+!>
+!> @param[in] c_message - c_int(:): BUFR message
+!> @param[in] clen - c_int: Dimensioned size of c_message
+!> @param[in] section01_mnemonic - c_char: Section 0 or Section 1 mnemonic
+!>
+function iupbs01_c(c_message, clen, section01_mnemonic) result(ires) bind(C, name='iupbs01_f')
+  use function_iupbs01
+
+  integer(c_int), value, intent(in) :: clen
+  integer(c_int), intent(in) :: c_message(clen)
+  character(kind=c_char, len=1), intent(in) :: section01_mnemonic
+  integer(c_int) :: ires
+
+  ires = iupbs01(c_message, c_f_string(section01_mnemonic))
+end function iupbs01_c
+
+
+!> @author Jeff Ator
+!> @date 2022-02-01
+!>
+!> @brief Wraps BUFRLIB "iupb" subroutine.
+!>
+!> @param[in] c_message - c_int(:): BUFR message
+!> @param[in] clen - c_int: Dimensioned size of c_message
+!> @param[in] isbyt - c_int: Byte within c_message at whose first bit to start unpacking
+!> @param[in] nbits - c_int: Number of bits to be unpacked, beginning at first bit of isbyt
+!>
+function iupb_c(c_message, clen, isbyt, nbits) result(ires) bind(C, name='iupb_f')
+  use function_iupb
+
+  integer(c_int), value, intent(in) :: clen, isbyt, nbits
+  integer(c_int), intent(in) :: c_message(clen)
+  integer(c_int) :: ires
+
+  ires = iupb(c_message, isbyt, nbits)
+end function iupb_c
 
 end module bufr_c_interface_mod

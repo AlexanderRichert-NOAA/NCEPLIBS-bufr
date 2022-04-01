@@ -25,12 +25,12 @@ C>     LMSG     - INTEGER: BUFR MESSAGE LENGTH (IN MACHINE WORDS)
 C>
 C> REMARKS:
 C>    THIS ROUTINE CALLS:        NMWRD
-C>    THIS ROUTINE IS CALLED BY: READERME
-C>                               Also called by application programs.
+C>    THIS ROUTINE IS CALLED BY: None
+C>                               May be called by application programs?
 C>
       FUNCTION LMSG(SEC0)
 
-
+      use function_nmwrd
 
       CHARACTER*8 SEC0,CSEC0
       DIMENSION   MSEC0(2)

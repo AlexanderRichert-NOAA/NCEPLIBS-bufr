@@ -80,8 +80,13 @@ C>
       SUBROUTINE DUMPBF(LUNIT,JDATE,JDUMP)
 
       USE MODA_MGWA
+
       use subroutine_closbf
       use subroutine_openbf
+      use function_iupbs01
+      use function_iupbs3
+      use function_igetdate
+      use function_idxmsg
 
       COMMON /QUIET / IPRT
 

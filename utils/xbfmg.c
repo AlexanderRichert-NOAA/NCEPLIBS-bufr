@@ -10,6 +10,7 @@
 #include <sys/stat.h>
 
 #include "bufrlib.h"
+#include "bufr_interface.h"
 
 #ifdef UNDERSCORE
 #define prtusage prtusage_
@@ -31,6 +32,7 @@ void prtusage( char * );
  * | Date | Programmer | Comments |
  * | -----|------------|----------|
  * | 2018-03-01 | J. Ator | Original author |
+ * | 2022-02-01 | J. Ator | Use iupb_f |
  */
 void prtusage( char *prgnam ) {
 	printf( "\nUSAGE: %s [-v] [-h] [-g] bufrfile\n\n", prgnam );
@@ -125,8 +127,7 @@ int main( int argc, char *argv[] ) {
 
 	FILE *fp;
 
-	f77int msglen, wkint;
-	f77int c24 = 24, c1 = 1;
+	int msglen, wkint;
 
 	unsigned long i, filesize, noutfile;
 
@@ -252,7 +253,7 @@ int main( int argc, char *argv[] ) {
 	    **  Read the BUFR message length from Section 0.
 	    */
 	    memcpy( &wkint, ( pmsg + 4 ), 3 );
-	    msglen = iupb( &wkint, &c1, &c24 );
+	    msglen = iupb_f( &wkint, 1, 1, 24 );
 
 	    /*
 	    **  Write the BUFR message to the output file.

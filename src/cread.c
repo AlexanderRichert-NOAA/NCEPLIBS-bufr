@@ -14,6 +14,7 @@
  */
 
 #include "bufrlib.h"
+#include "bufr_interface.h"
 #include "cread.h"
 
 /**
@@ -136,10 +137,11 @@ void closfb   (nfile      ) f77int *nfile;              { fclose(pb[*nfile]); }
  * | -----|------------|----------|
  * | 2012-09-15 | J. Woollen | Original author |
  * | 2014-11-07 | J. Ator | Allow dynamic allocation of pb and lstpos arrays |
+ * | 2022-02-01 | J. Ator | Use iupbs01_f |
  */
 f77int crdbufr (nfile,bufr,mxbyt)
 f77int *nfile; f77int *mxbyt; char *bufr;
-{  f77int  nbyt; f77int  nb; f77int wkint[2]; fpos_t nxtpos;
+{  f77int  nbyt; f77int  nb; int wkint[2]; fpos_t nxtpos;
    fgetpos(pb[*nfile],&lstpos[*nfile]);
    nb = sizeof(*bufr); bufr[0]=bufr[1];
    while ( strncmp(bufr,"BUFR",4)!=0)
@@ -147,7 +149,7 @@ f77int *nfile; f77int *mxbyt; char *bufr;
       if(fread(bufr+3,nb,1,pb[*nfile])!=1) return -1;
    }
    fgetpos(pb[*nfile],&nxtpos); if(fread(bufr+4,nb,4,pb[*nfile])!=4) return -1;
-   memcpy(wkint,bufr,8); nbyt=iupbs01(wkint,"LENM",4)-8;
+   memcpy(wkint,bufr,8); nbyt=(f77int)iupbs01_f(wkint,2,"LENM")-8;
    if(nbyt+8>*mxbyt)                           {fsetpos(pb[*nfile],&nxtpos);return -3;};
    if(fread(bufr+8,nb,nbyt,pb[*nfile])!=nbyt)  {fsetpos(pb[*nfile],&nxtpos);return -2;};
    if(strncmp(bufr+nbyt+4,"7777",4)!=0)        {fsetpos(pb[*nfile],&nxtpos);return -2;};

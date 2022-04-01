@@ -71,6 +71,10 @@ C>
 
 	USE MODA_MGWA
 
+        use function_idxmsg
+        use function_iupbs3
+        use subroutine_stbfdx
+
 	COMMON /QUIET/  IPRT
 
 	CHARACTER*128 ERRSTR

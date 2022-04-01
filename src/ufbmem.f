@@ -66,7 +66,10 @@ C>
 
       USE MODA_MGWA
       USE MODA_MSGMEM
+
       use subroutine_closbf
+      use function_idxmsg
+      use function_nmwrd
       use subroutine_openbf
 
       COMMON /QUIET / IPRT

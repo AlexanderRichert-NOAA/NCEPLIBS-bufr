@@ -86,6 +86,9 @@ C>
       USE MODA_COMPRX
       USE MODA_COMPRS
       USE MODA_S01CM
+
+      use function_iupbs01
+      use subroutine_msgwrt
  
       COMMON /MAXCMP/ MAXCMB,MAXROW,MAXCOL,NCMSGS,NCSUBS,NCBYTS
  

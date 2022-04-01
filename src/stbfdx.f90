@@ -1,37 +1,46 @@
-C> @file
-C> @author J @date 2009-03-23
+!> @file
+!> @author J. Ator
+!> @date 2009-03-23
       
-C> THIS SUBROUTINE COPIES A BUFR TABLE (DICTIONARY) MESSAGE
-C>   FROM THE INPUT ARRAY MESG INTO THE INTERNAL MEMORY ARRAYS IN
-C>   MODULE TABABD.
-C>
-C> PROGRAM HISTORY LOG:
-C> 2009-03-23  J. ATOR    -- ORIGINAL AUTHOR, USING LOGIC COPIED
-C>                           FROM PREVIOUS VERSION OF RDBFDX
-C> 2014-11-14  J. ATOR    -- REPLACE CHRTRNA CALLS WITH UPC CALLS
-C> 2014-12-10  J. ATOR    -- USE MODULES INSTEAD OF COMMON BLOCKS
-C>
-C> USAGE:    CALL STBFDX (LUN,MESG)
-C>   INPUT ARGUMENT LIST:
-C>     LUN      - INTEGER: I/O STREAM INDEX INTO INTERNAL MEMORY ARRAYS
-C>     MESG     - INTEGER: *-WORD PACKED BINARY ARRAY CONTAINING
-C>                BUFR TABLE (DICTIONARY) MESSAGE
-C>
-C> REMARKS:
-C>    THIS ROUTINE CALLS:        BORT     CAPIT    GETLENS  IGETNTBI
-C>                               IDN30    IFXY     IUPB     IUPBS01
-C>                               NENUBD   PKTDD    STNTBIA  UPC
-C>    THIS ROUTINE IS CALLED BY: RDBFDX   RDMEMM   READERME
-C>                               Normally not called by any application
-C>                               programs.
-C>
-      SUBROUTINE STBFDX(LUN,MESG)
+!> THIS SUBROUTINE COPIES A BUFR TABLE (DICTIONARY) MESSAGE
+!>   FROM THE INPUT ARRAY MESG INTO THE INTERNAL MEMORY ARRAYS IN
+!>   MODULE TABABD.
+!>
+!> PROGRAM HISTORY LOG:
+!> 2009-03-23  J. ATOR    -- ORIGINAL AUTHOR, USING LOGIC COPIED
+!>                           FROM PREVIOUS VERSION OF RDBFDX
+!> 2014-11-14  J. ATOR    -- REPLACE CHRTRNA CALLS WITH UPC CALLS
+!> 2014-12-10  J. ATOR    -- USE MODULES INSTEAD OF COMMON BLOCKS
+!>
+!> USAGE:    CALL STBFDX (LUN,MESG)
+!>   INPUT ARGUMENT LIST:
+!>     LUN      - INTEGER: I/O STREAM INDEX INTO INTERNAL MEMORY ARRAYS
+!>     MESG     - INTEGER: *-WORD PACKED BINARY ARRAY CONTAINING
+!>                BUFR TABLE (DICTIONARY) MESSAGE
+!>
+!> REMARKS:
+!>    THIS ROUTINE CALLS:        BORT     CAPIT    GETLENS  IGETNTBI
+!>                               IDN30    IFXY     IUPB     IUPBS01
+!>                               NENUBD   PKTDD    STNTBIA  UPC
+!>    THIS ROUTINE IS CALLED BY: RDBFDX   RDMEMM   READERME
+!>                               Normally not called by any application
+!>                               programs.
+!>
+
+module subroutine_stbfdx
+
+   contains
+
+   subroutine stbfdx(LUN,MESG)
 
       USE MODV_MAXCD
       USE MODA_TABABD
 
-      COMMON /DXTAB / MAXDX,IDXV,NXSTR(10),LDXA(10),LDXB(10),LDXD(10),
-     .                LD30(10),DXSTR(10)
+      use function_iupbs01
+      use function_iupb
+      use subroutine_getlens
+
+      COMMON /DXTAB / MAXDX,IDXV,NXSTR(10),LDXA(10),LDXB(10),LDXD(10),LD30(10),DXSTR(10)
 
       CHARACTER*128 BORT_STR
       CHARACTER*128 TABB1,TABB2
@@ -43,18 +52,17 @@ C>
       CHARACTER*6   NUMB,CIDN
       DIMENSION     LDXBD(10),LDXBE(10)
 
-      DIMENSION     MESG(*)
+      integer, intent(in) :: MESG(:)
 
       DATA LDXBD /38,70,8*0/
       DATA LDXBE /42,42,8*0/
 
-C-----------------------------------------------------------------------
+!-----------------------------------------------------------------------
       JA(I) = IA+1+LDA*(I-1)
       JB(I) = IB+1+LDB*(I-1)
-C-----------------------------------------------------------------------
+!-----------------------------------------------------------------------
 
-C  GET SOME PRELIMINARY INFORMATION FROM THE MESSAGE
-C  -------------------------------------------------
+!     Get some preliminary information from the message
 
       IDXS = IUPBS01(MESG,'MSBT')+1
       IF(IDXS.GT.IDXV+1) IDXS = IUPBS01(MESG,'MTVL')+1
@@ -69,8 +77,7 @@ C  -------------------------------------------------
       CALL UPC(DXCMP,NXSTR(IDXS),MESG,JBIT,.FALSE.)
       IF(DXCMP.NE.DXSTR(IDXS)) GOTO 902
 
-C  SECTION 4 - READ DEFINITIONS FOR TABLES A, B AND D
-C  --------------------------------------------------
+!     Section 4 - read definitions for Tables A, B and D
 
       LDA  = LDXA (IDXS)
       LDB  = LDXB (IDXS)
@@ -86,8 +93,7 @@ C  --------------------------------------------------
       ID = JB(LB+1)
       LD = IUPB(MESG,ID,8)
 
-C  TABLE A
-C  -------
+!     Table A
 
       DO I=1,LA
         N = IGETNTBI(LUN,'A')
@@ -99,8 +105,7 @@ C  -------
         CALL STNTBIA(N,LUN,NUMB,NEMO,CSEQ)
       ENDDO
 
-C  TABLE B
-C  -------
+!     Table B
 
       DO I=1,LB
         N = IGETNTBI(LUN,'B')
@@ -119,8 +124,7 @@ C  -------
         NTBB(LUN) = N
       ENDDO
 
-C  TABLE D
-C  -------
+!     Table D
 
       DO I=1,LD
         N = IGETNTBI(LUN,'D')
@@ -145,19 +149,17 @@ C  -------
         NTBD(LUN) = N
       ENDDO
 
-C  EXITS
-C  -----
+!     EXITS
+!     -----
 
       RETURN
-901   CALL BORT('BUFRLIB: STBFDX - UNEXPECTED DICTIONARY MESSAGE '//
-     . 'SUBTYPE OR LOCAL VERSION NUMBER (E.G., L.V.N. HIGHER THAN '//
-     . 'KNOWN)')
-902   CALL BORT('BUFRLIB: STBFDX - UNEXPECTED DICTIONARY MESSAGE '//
-     . 'CONTENTS')
-903   WRITE(BORT_STR,'("BUFRLIB: STBFDX - NUMBER OF DESCRIPTORS IN '//
-     . 'TABLE D ENTRY ",A," IN BUFR TABLE (",I4,") EXCEEDS THE LIMIT '//
-     . ' (",I4,")")') NEMO,ND,MAXCD
+901   CALL BORT('BUFRLIB: STBFDX - UNEXPECTED DICTIONARY MESSAGE SUBTYPE OR LOCAL VERSION NUMBER (E.G., L.V.N. HIGHER THAN KNOWN)')
+902   CALL BORT('BUFRLIB: STBFDX - UNEXPECTED DICTIONARY MESSAGE CONTENTS')
+903   WRITE(BORT_STR,'("BUFRLIB: STBFDX - NUMBER OF DESCRIPTORS IN TABLE D ENTRY ",A," IN BUFR TABLE (",I4,") EXCEEDS THE LIMIT ' &
+        // ' (",I4,")")') NEMO,ND,MAXCD
       CALL BORT(BORT_STR)
-904   CALL BORT('BUFRLIB: STBFDX - BAD RETURN FROM BUFRLIB ROUTINE '//
-     . 'PKTDD, SEE PREVIOUS WARNING MESSAGE')
-      END
+904   CALL BORT('BUFRLIB: STBFDX - BAD RETURN FROM BUFRLIB ROUTINE PKTDD, SEE PREVIOUS WARNING MESSAGE')
+
+    end subroutine stbfdx
+
+end

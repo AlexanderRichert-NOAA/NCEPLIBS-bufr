@@ -84,6 +84,7 @@ C>
       USE MODA_MSGCWD
       USE MODA_BITBUF
       USE MODA_TABLES
+
       use subroutine_closbf
       use subroutine_openbf
       use function_ireadmg

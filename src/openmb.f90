@@ -103,6 +103,7 @@ end module
 subroutine openmb_body( lunit, subset, jdate )
 
       USE MODA_MSGCWD
+
       use subroutine_closmg
 
       CHARACTER*(*) SUBSET

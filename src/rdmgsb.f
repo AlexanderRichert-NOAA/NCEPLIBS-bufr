@@ -46,6 +46,7 @@ C>
 
       USE MODA_MSGCWD
       USE MODA_BITBUF
+
       use subroutine_openbf
       use subroutine_readmg
 

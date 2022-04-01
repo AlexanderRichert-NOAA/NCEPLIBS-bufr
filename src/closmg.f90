@@ -90,6 +90,8 @@ subroutine closmg_body( lunin )
       USE MODA_MSGLIM
       USE MODA_BITBUF
 
+      use subroutine_msgwrt
+
 !-----------------------------------------------------------------------
 !-----------------------------------------------------------------------
 
@@ -103,9 +105,9 @@ subroutine closmg_body( lunin )
       IF(IL.LT.0) GOTO 901
       IF(IM.NE.0) THEN
          IF(NSUB(LUN).GT.0) THEN
-            CALL MSGWRT(LUNIT,MBAY(1,LUN),MBYT(LUN))
+            CALL MSGWRT(LUNIT,MBAY(:,LUN),MBYT(LUN))
          ELSE IF(NSUB(LUN).EQ.0.AND.NMSG(LUN).LT.MSGLIM(LUN)) THEN
-            CALL MSGWRT(LUNIT,MBAY(1,LUN),MBYT(LUN))
+            CALL MSGWRT(LUNIT,MBAY(:,LUN),MBYT(LUN))
          ELSE IF(NSUB(LUN).LT.0) THEN
             CALL WRCMPS(-LUNIT)
          ENDIF

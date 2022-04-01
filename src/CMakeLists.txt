@@ -11,31 +11,35 @@ list(APPEND fortran_src
   moda_msglim.F moda_msgmem.F moda_mstabs.F moda_nmikrp.F moda_nrv203.F moda_nulbfr.F moda_rdmtb.F
   moda_rlccmn.F moda_s01cm.F moda_sc3bfr.F moda_stbfr.F moda_stcode.F moda_tababd.F moda_tables.F
   moda_ufbcpl.F moda_unptyp.F moda_usrbit.F moda_usrint.F moda_usrtmp.F moda_xtab.F
-  closbf.f90 closmg.f90 openbf.f90 openmb.f90 openmg.f90 readmg.f90 ireadmg.f90
-  ufbint.f90 ufbrep.f90 upftbv.f90 writsa.f90
+  closbf.f90 closmg.f90 getlens.f90 idxmsg.f90 igetdate.f90
+  ireadmg.f90 iupb.f90 iupbs01.f90 iupbs3.f90
+  msgwrt.f90 nmwrd.f90 openbf.f90 openmb.f90
+  openmg.f90 readerme.f90 readmg.f90 stbfdx.f90
+  ufbint.f90 ufbrep.f90 upftbv.f90
+  upds3.f90 writsa.f90 
   bufr_procedures.f90
-  adn30.f atrcpt.f blocks.f bort.f bort2.f cadn30.f capit.f chekstab.f chrtrna.f cktaba.f
-  cmpmsg.f cmsgini.f cnved4.f codflg.f conwin.f copybf.f copymg.f copysb.f cpbfdx.f cpdxmm.f cpymem.f
-  cpyupd.f datebf.f datelen.f digit.f drfini.f drstpl.f dumpbf.f dxdump.f dxinit.f dxmini.f elemdx.f
-  errwrt.f exitbufr.f fstag.f getabdb.f getbmiss.f getcfmng.f getlens.f getntbe.f gets1loc.f gettagpr.f
+  adn30.f atrcpt.f90 blocks.f bort.f bort2.f cadn30.f capit.f chekstab.f chrtrna.f cktaba.f90
+  cmpmsg.f cmsgini.f cnved4.f90 codflg.f conwin.f copybf.f copymg.f90 copysb.f90 cpbfdx.f cpdxmm.f cpymem.f90
+  cpyupd.f90 datebf.f datelen.f digit.f drfini.f drstpl.f dumpbf.f dxdump.f dxinit.f dxmini.f elemdx.f
+  errwrt.f exitbufr.f fstag.f getabdb.f getbmiss.f getcfmng.f getntbe.f gets1loc.f gettagpr.f
   gettagre.f gettbh.f getvalnb.f getwin.f hold4wlc.f i4dy.f ibfms.f icbfms.f ichkstr.f icmpdx.f icopysb.f
-  idn30.f idxmsg.f ifbget.f ifxy.f igetdate.f igetfxy.f igetmxby.f igetntbi.f igetntbl.f igetprm.f
+  idn30.f ifbget.f ifxy.f igetfxy.f igetmxby.f igetntbi.f igetntbl.f igetprm.f
   igetrfel.f igetsc.f igettdi.f imrkopr.f inctab.f invcon.f invmrg.f invtag.f invwin.f iok2cpy.f
-  iokoper.f ipkm.f ipks.f ireadmm.f ireadns.f ireadsb.f ishrdx.f isize.f istdesc.f iupb.f
-  iupbs01.f iupbs3.f iupm.f iupvs01.f jstnum.f lcmgdf.f lmsg.f lstjpb.f makestab.f maxout.f
-  mesgbc.f mesgbf.f minimg.f mrginv.f msgfull.f msgini.f msgupd.f msgwrt.f mtfnam.f mtinfo.f mvb.f
+  iokoper.f ipkm.f ipks.f ireadmm.f ireadns.f ireadsb.f ishrdx.f isize.f istdesc.f
+  iupm.f iupvs01.f90 jstnum.f lcmgdf.f lmsg.f lstjpb.f makestab.f maxout.f
+  mesgbc.f mesgbf.f minimg.f mrginv.f msgfull.f msgini.f msgupd.f90 mtfnam.f mtinfo.f mvb.f
   nemdefs.f nemock.f nemspecs.f nemtab.f nemtba.f nemtbax.f nemtbb.f nemtbd.f nenubd.f nevn.f newwin.f
-  nmsub.f nmwrd.f numbck.f numtab.f numtbd.f nvnwin.f nwords.f nxtwin.f openbt.f pad.f
-  padmsg.f parstr.f parusr.f parutg.f pkb.f pkbs1.f pkc.f pkftbv.f pktdd.f posapx.f rcstpl.f rdbfdx.f
-  rdcmps.f rdmemm.f rdmems.f rdmgsb.f rdmsgw.f rdmtbb.f rdmtbd.f rdmtbf.f rdtree.f rdusdx.f readdx.f
-  readerme.f readlc.f readmm.f readns.f reads3.f readsb.f rewnbf.f rsvfvm.f rtrcpt.f
-  rtrcptb.f seqsdx.f setblock.f setbmiss.f setvalnb.f sntbbe.f sntbde.f sntbfe.f status.f stbfdx.f
-  stdmsg.f stndrd.f stntbi.f stntbia.f strbtm.f strcln.f strcpt.f string.f strnum.f strsuc.f tabent.f
+  nmsub.f numbck.f numtab.f numtbd.f nvnwin.f nwords.f nxtwin.f openbt.f pad.f
+  padmsg.f90 parstr.f parusr.f parutg.f pkb.f pkbs1.f90 pkc.f pkftbv.f pktdd.f posapx.f rcstpl.f rdbfdx.f
+  rdcmps.f rdmemm.f rdmems.f90 rdmgsb.f rdmsgw.f rdmtbb.f rdmtbd.f rdmtbf.f rdtree.f rdusdx.f readdx.f
+  readlc.f readmm.f readns.f reads3.f90 readsb.f rewnbf.f rsvfvm.f rtrcpt.f
+  rtrcptb.f90 seqsdx.f setblock.f setbmiss.f setvalnb.f sntbbe.f sntbde.f sntbfe.f status.f
+  stdmsg.f stndrd.f90 stntbi.f stntbia.f strbtm.f strcln.f strcpt.f string.f strnum.f strsuc.f tabent.f
   tabsub.f trybump.f ufbcnt.f ufbcpy.f ufbcup.f ufbdmp.f ufbevn.f ufbget.f ufbin3.f ufbinx.f
   ufbmem.f ufbmex.f ufbmms.f ufbmns.f ufbovr.f ufbpos.f ufbqcd.f ufbqcp.f ufbrms.f ufbrp.f
-  ufbrw.f ufbseq.f ufbsp.f ufbstp.f ufbtab.f ufbtam.f ufdump.f upb.f upbb.f upc.f upds3.f
-  ups.f uptdd.f usrtpl.f valx.f wrcmps.f wrdxtb.f writcp.f writdx.f writlc.f writsb.f
-  wrtree.f wtstat.f arallocf.f ardllocf.f ireadmt.f irev.F isetprm.f pkvs01.f
+  ufbrw.f ufbseq.f ufbsp.f ufbstp.f ufbtab.f ufbtam.f ufdump.f upb.f upbb.f upc.f
+  ups.f uptdd.f usrtpl.f valx.f wrcmps.f wrdxtb.f writcp.f writdx.f writlc.f90 writsb.f
+  wrtree.f wtstat.f arallocf.f ardllocf.f ireadmt.f90 irev.F isetprm.f pkvs01.f
   wrdlen.F fortran_open.f90 fortran_close.f90 bufr_interface.f90)
 
 list(APPEND c_src

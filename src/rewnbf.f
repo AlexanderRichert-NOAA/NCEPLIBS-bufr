@@ -66,6 +66,7 @@ C>
       USE MODA_MSGCWD
       USE MODA_BITBUF
       USE MODA_BUFRSR
+
       use subroutine_readmg
 
       CHARACTER*128 BORT_STR

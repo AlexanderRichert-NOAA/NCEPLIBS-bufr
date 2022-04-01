@@ -57,8 +57,11 @@ C>
       SUBROUTINE MESGBF(LUNIT,MESGTYP)
 
       USE MODA_MGWA
+
       use subroutine_closbf
       use subroutine_openbf
+      use function_iupbs01
+      use function_idxmsg
 
 C-----------------------------------------------------------------------
 C-----------------------------------------------------------------------

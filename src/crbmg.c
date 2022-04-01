@@ -3,6 +3,7 @@
  *  previously opened for reading via a C language interface.
  */
 #include "bufrlib.h"
+#include "bufr_interface.h"
 #include "cobfl.h"
 
 /** 
@@ -29,7 +30,7 @@
  *                         - -2 = I/O error encountered while reading
  *
  * <p>This subroutine is designed to be easily callable from
- * application program written in either C or Fortran.
+ * application programs written in either C or Fortran.
  *
  * <p>The file from which messages are to be read must have already
  * been opened for reading via a previous call to subroutine cobfl()
@@ -43,13 +44,14 @@
  *  | Date | Programmer | Comments |
  *  | -----|------------|----------|
  *  | 2005-11-29 | J. Ator | Original author |
+ *  | 2022-02-01 | J. Ator | Use iupbs01_f |
  *
  */
 void crbmg( char *bmg, f77int *mxmb, f77int *nmb, f77int *iret )
 {
     f77int i1 = 1, i2 = 2, i3 = 3, i4 = 4, i24 = 24;
-    f77int wkint[2];
-    f77int iben, isbyt, iwid;
+    int wkint[2];
+    f77int iben, isbyt, iwid, ier;
 
     char errstr[129];
 
@@ -83,13 +85,13 @@ void crbmg( char *bmg, f77int *mxmb, f77int *nmb, f77int *iret )
 */
     if ( ( *iret = rbytes( bmg, mxmb, 4, 4 ) ) != 0 ) return;
     memcpy( wkint, bmg, 8 );
-    iben = iupbs01( wkint, "BEN", 3 );
+    iben = ( f77int ) iupbs01_f( wkint, 2, "BEN" );
 
     if ( iben >= 2 ) {
 /*
 **	Get the length of the BUFR message.
 */
-        *nmb = iupbs01( wkint, "LENM", 4 );
+        *nmb = ( f77int ) iupbs01_f( wkint, 2, "LENM" );
 /*
 **	Read the remainder of the BUFR message.
 */
@@ -106,7 +108,7 @@ void crbmg( char *bmg, f77int *mxmb, f77int *nmb, f77int *iret )
 /*
 **	Get the length of Section 1 and add it to the total.
 */
-	gets1loc( "LEN1", &iben, &isbyt, &iwid, &wkint[0], 4 );
+	gets1loc( "LEN1", &iben, &isbyt, &iwid, &ier, 4 );
 	*nmb = lsec + iupm( &bmg[lsec+isbyt-1], &iwid, 3 );
 /*
 **	Read up through the end of Section 1.
@@ -115,7 +117,7 @@ void crbmg( char *bmg, f77int *mxmb, f77int *nmb, f77int *iret )
 /*
 **	Is there a Section 2?
 */
-	gets1loc( "ISC2", &iben, &isbyt, &iwid, &wkint[0], 4 );
+	gets1loc( "ISC2", &iben, &isbyt, &iwid, &ier, 4 );
 	nsecs = iupm( &bmg[lsec+isbyt-1], &iwid, 1 ) + 2;
 /*
 **	Read up through the end of Section 4.

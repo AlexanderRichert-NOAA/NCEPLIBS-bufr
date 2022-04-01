@@ -61,7 +61,7 @@ module function_ireadmg
         integer(kind=4) :: ireadmg_4_d
         character(len=*), intent(out) :: subset
 
-        integer :: my_lunit, my_idate, ireadmg_body
+        integer :: my_lunit, my_idate
 
         my_lunit = lunit
 
@@ -81,7 +81,7 @@ module function_ireadmg
         integer(kind=8) :: ireadmg_8
         character(len=*), intent(out) :: subset
 
-        integer :: my_lunit, my_idate, ireadmg_body
+        integer :: my_lunit, my_idate
 
         my_lunit = lunit
 
@@ -91,15 +91,16 @@ module function_ireadmg
 
     end function ireadmg_8
 
-end module
-
-function ireadmg_body( lunit, subset, idate )
+    function ireadmg_body( lunit, subset, idate )
 
       use subroutine_readmg
 
       CHARACTER*8 SUBSET
+
       CALL READMG(LUNIT,SUBSET,IDATE,IRET)
       IREADMG_BODY = IRET
       RETURN
 
-end
+    end function ireadmg_body
+
+end module

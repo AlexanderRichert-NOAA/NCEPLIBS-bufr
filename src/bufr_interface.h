@@ -100,7 +100,7 @@ extern "C" {
     @brief Wraps BUFRLIB "ufbint" function.
 
     @param[in] bufr_unit - int: the fortran file unit number to read from
-    @param[inout] c_data - void**: c style pointer to a pre-allocated buffer
+    @param[inout] c_data - void**: C-style pointer to a pre-allocated buffer
     @param[in] dim_1, dim_2 - int: dimensionality of data to read or write
     @param[out] iret -  int: return value, length of data read
     @param[in] table_b_mnemonic - const char*: string of mnemonics
@@ -115,7 +115,7 @@ extern "C" {
     @brief Wraps BUFRLIB "ufbrep" function.
 
     @param[in] bufr_unit - int: the fortran file unit number to read from
-    @param[inout] c_data - void**: c style pointer to a pre-allocated buffer
+    @param[inout] c_data - void**: C-style pointer to a pre-allocated buffer
     @param[in] dim_1, dim_2 - int: dimensionality of data to read or write
     @param[out] iret -  int: return value, length of data read
     @param[in] table_b_mnemonic - const char*: string of mnemonics
@@ -134,6 +134,36 @@ extern "C" {
     @param[in] file_unit_2 - int: number to use for second file unit
 */
   void mtinfo_f(const char* path, int file_unit_1, int file_unit_2);
+
+
+/** @author Jeff Ator
+    @date 2022-02-01
+
+    @brief Wraps BUFRLIB "iupbs01" subroutine.
+
+    @param[in] c_message - int*: BUFR message
+    @param[in] clen - int: Dimensioned size of c_message
+    @param[in] section01_mnemonic - const char*: Section 0 or Section 1 mnemonic
+
+    @returns iupbs01_f - int: Value corresponding to section01_mnemonic
+*/
+  int iupbs01_f(int* c_message, int clen, const char* section01_mnemonic);
+
+
+/** @author Jeff Ator
+    @date 2022-02-01
+
+    @brief Wraps BUFRLIB "iupb" subroutine.
+
+    @param[in] c_message - int*: BUFR message
+    @param[in] clen - int: Dimensioned size of c_message
+    @param[in] isbyt - int: Byte within c_message at whose first bit to start unpacking
+    @param[in] nbits - int: Number of bits to be unpacked, beginning at first bit of isbyt
+
+    @returns iupb_f - int: Unpacked integer
+*/
+  int iupb_f(int* c_message, int clen, int isbyt, int nbits);
+
 
 #ifdef __cplusplus
 }

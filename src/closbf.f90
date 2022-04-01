@@ -81,6 +81,7 @@ end module
 subroutine closbf_body( lunit )
 
       USE MODA_NULBFR
+
       use subroutine_closmg
 
       CHARACTER*128 ERRSTR

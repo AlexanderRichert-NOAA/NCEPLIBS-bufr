@@ -53,6 +53,8 @@ C>
       USE MODA_MGWA
       USE MODA_MSGMEM
 
+      use subroutine_stbfdx
+
       COMMON /QUIET / IPRT
 
       CHARACTER*128 BORT_STR,ERRSTR

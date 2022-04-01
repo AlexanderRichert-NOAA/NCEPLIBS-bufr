@@ -92,6 +92,7 @@ end module
 subroutine openmg_body( lunit, subset, jdate )
 
       USE MODA_MSGCWD
+
       use subroutine_closmg
 
       CHARACTER*(*) SUBSET
