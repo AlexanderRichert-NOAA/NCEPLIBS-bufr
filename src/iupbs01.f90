@@ -77,12 +77,17 @@ module function_iupbs01
         integer(kind=4), intent(in) :: mbay(:)
         character(len=*), intent(in) :: s01mnem
         integer(kind=4) :: iupbs01_4_d
+        
+        integer, allocatable :: my_mbay(:)
+        integer :: max_to_copy
 
-        integer :: my_mbay(size(mbay))
-
-        my_mbay(1:size(mbay)) = mbay(1:size(mbay))
+        max_to_copy = min(size(mbay),10)
+        allocate(my_mbay(max_to_copy))
+        my_mbay(1:max_to_copy) = mbay(1:max_to_copy)
 
         iupbs01_4_d = iupbs01_body( my_mbay, s01mnem )
+
+        deallocate(my_mbay)
 
     end function iupbs01_4_d
 
@@ -94,12 +99,17 @@ module function_iupbs01
         integer(kind=8), intent(in) :: mbay(:)
         character(len=*), intent(in) :: s01mnem
         integer(kind=8) :: iupbs01_8
+        
+        integer, allocatable :: my_mbay(:)
+        integer :: max_to_copy
 
-        integer :: my_mbay(size(mbay))
-
-        my_mbay(1:size(mbay)) = mbay(1:size(mbay))
+        max_to_copy = min(size(mbay),10)
+        allocate(my_mbay(max_to_copy))
+        my_mbay(1:max_to_copy) = mbay(1:max_to_copy)
 
         iupbs01_8 = iupbs01_body( my_mbay, s01mnem )
+
+        deallocate(my_mbay)
 
     end function iupbs01_8
 

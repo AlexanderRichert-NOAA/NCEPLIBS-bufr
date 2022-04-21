@@ -53,13 +53,18 @@ module function_iupb
         integer(kind=4), intent(in) :: mbay(:), nbyt, nbit
         integer(kind=4) :: iupb_4_d
 
-        integer :: my_mbay(size(mbay)), my_nbyt, my_nbit
+        integer ::  my_nbyt, my_nbit, max_to_copy
+        integer, allocatable :: my_mbay(:)
 
-        my_mbay(1:size(mbay)) = mbay(1:size(mbay))
+        max_to_copy = min( size(mbay), ((nbyt/4)+(nbit/32)+2) )
+        allocate(my_mbay(max_to_copy))
+        my_mbay(1:max_to_copy) = mbay(1:max_to_copy)
         my_nbyt = nbyt
         my_nbit = nbit
 
         iupb_4_d = iupb_body( my_mbay, my_nbyt, my_nbit )
+
+        deallocate(my_mbay)
 
     end function iupb_4_d
 
@@ -71,13 +76,18 @@ module function_iupb
         integer(kind=8), intent(in) :: mbay(:), nbyt, nbit
         integer(kind=8) :: iupb_8
 
-        integer :: my_mbay(size(mbay)), my_nbyt, my_nbit
+        integer ::  my_nbyt, my_nbit, max_to_copy
+        integer, allocatable :: my_mbay(:)
 
-        my_mbay(1:size(mbay)) = mbay(1:size(mbay))
+        max_to_copy = min( size(mbay), ((nbyt/8)+(nbit/64)+2) )
+        allocate(my_mbay(max_to_copy))
+        my_mbay(1:max_to_copy) = mbay(1:max_to_copy)
         my_nbyt = nbyt
         my_nbit = nbit
 
         iupb_8 = iupb_body( my_mbay, my_nbyt, my_nbit )
+
+        deallocate(my_mbay)
 
     end function iupb_8
 

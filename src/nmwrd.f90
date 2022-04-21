@@ -44,11 +44,16 @@ module function_nmwrd
         integer(kind=4), intent(in) :: mbay(:)
         integer(kind=4) :: nmwrd_4_d
 
-        integer :: my_mbay(size(mbay))
+        integer, allocatable :: my_mbay(:)
+        integer :: max_to_copy
 
-        my_mbay(1:size(mbay)) = mbay(1:size(mbay))
+        max_to_copy = min(size(mbay),2)
+        allocate(my_mbay(max_to_copy))
+        my_mbay(1:max_to_copy) = mbay(1:max_to_copy)
 
         nmwrd_4_d = nmwrd_body( my_mbay )
+
+        deallocate(my_mbay)
 
     end function nmwrd_4_d
 
@@ -60,11 +65,16 @@ module function_nmwrd
         integer(kind=8), intent(in) :: mbay(:)
         integer(kind=8) :: nmwrd_8
 
-        integer :: my_mbay(size(mbay))
+        integer, allocatable :: my_mbay(:)
+        integer :: max_to_copy
 
-        my_mbay(1:size(mbay)) = mbay(1:size(mbay))
+        max_to_copy = min(size(mbay),2)
+        allocate(my_mbay(max_to_copy))
+        my_mbay(1:max_to_copy) = mbay(1:max_to_copy)
 
         nmwrd_8 = nmwrd_body( my_mbay )
+
+        deallocate(my_mbay)
 
     end function nmwrd_8
 
