@@ -18,6 +18,8 @@
 #include <string.h>
 #include <ctype.h>
 
+#include "bufr_interface.h"
+
 #define NFILES @NFILES@ 
 #define MAXCD @MAXCD@
 #define MAXNC @MAXNC@
@@ -60,8 +62,6 @@
 #define iupbs01	   iupbs01_
 #define iupm	   iupm_
 #define maxout     maxout_
-#define nemtab	   nemtab_
-#define nemtbb	   nemtbb_
 #define nummtb	   nummtb_
 #define numtbd	   numtbd_
 #define openmb     openmb_
@@ -126,8 +126,6 @@ f77int iupb( f77int *, f77int *, f77int * );
 f77int iupbs01 ( f77int *, char *, size_t );
 f77int iupm ( char *, f77int *, size_t );
 void maxout( f77int * );
-void nemtab( f77int *, char *, f77int *, char *, f77int *, size_t, size_t );
-void nemtbb( f77int *, f77int *, char *, f77int *, f77int *, f77int *, size_t );
 void nummtb( f77int *, char *, f77int * );
 void numtbd( f77int *, f77int *, char *, char *, f77int *, size_t, size_t );
 void openmb( f77int *, char *, f77int *, size_t );

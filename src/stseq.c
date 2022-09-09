@@ -43,6 +43,7 @@
  * | 2015-03-04 | J. Ator | Handle special case when associated fields are in effect for a Table D descriptor |
  * | 2021-05-17 | J. Ator | Allow up to 24 characters in cbunit |
  * | 2021-08-18 | J. Ator | Use strcpy instead of strncpy and then overwrite trailing null, in order to silence superfluous GNU compiler warnings |
+ * | 2022-09-01 | J. Ator | Modernize C-Fortran interface |
 */
 
 void stseq( f77int *lun, f77int *irepct, f77int *idn, char nemo[8],
@@ -67,6 +68,12 @@ void stseq( f77int *lun, f77int *irepct, f77int *idn, char nemo[8],
 **  recursive calls to this subroutine.
 */
     static f77int naf, iafpk[MXNAF];
+
+/* tempstmts */
+    int temp_lun, temp_pkint, temp_iret;
+
+    temp_lun = *lun;
+/* end tempstmts */
 
 /*
 **  Is *idn already listed as an entry in the internal Table D?
@@ -142,7 +149,7 @@ void stseq( f77int *lun, f77int *irepct, f77int *idn, char nemo[8],
 **		generate a Table B mnemonic to hold the corresponding data.
 */
 		strncpy( nemo2, adn, 6 );
-		memset( &nemo2[6], (int) cblk, 2 );
+		nemo2[6] = '\0';
 
 		if ( ( ix == 4 ) && ( iy == 0 ) ) {
 /*
@@ -159,7 +166,12 @@ void stseq( f77int *lun, f77int *irepct, f77int *idn, char nemo[8],
 **		  Is nemo2 already listed as an entry within the internal
 **		  Table B?
 */
-		  nemtab( lun, nemo2, &pkint, &tab, &iret, 8, sizeof( tab ) );
+		  nemtab_f( temp_lun, nemo2, &temp_pkint, &tab, &temp_iret );
+/* tempstmts */
+	pkint = temp_pkint;
+	iret = temp_iret;
+/* end tempstmts */
+
 		  if ( ( iret == 0 ) || ( tab != 'B' ) ) {
 /*
 **		    No, so create and store a new Table B entry for nemo2.
@@ -218,6 +230,7 @@ void stseq( f77int *lun, f77int *irepct, f77int *idn, char nemo[8],
 		    pkint = ( igettdi( lun ) - 49152 );
 		    cadn30( &pkint, adn2, sizeof( adn2 ) );
 
+		    memset( &nemo2[6], (int) cblk, 2 );
 		    stntbi( &nb, lun, adn2, nemo2, rpseq,
 			    sizeof( adn2 ), 8, 55 );
 

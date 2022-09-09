@@ -1,14 +1,14 @@
 /** @file
-    @brief Define signatures to enable a number of BUFRLIB 
-    subprograms to be called via wrapper functions from C and C++
-    application programs.
+    @brief Define signatures to enable a number of Fortran BUFRLIB 
+    subprograms and variables to be accessed via wrapper functions
+    from C and C++ application programs.
 
     @author Ronald Mclaren
     @date 2020-07-29
 
     <p>This header file defines the signatures for the functions
-       in bufr_interface.f90 which wrap a number of native Fortran
-       subroutines in the BUFRLIB.
+       in bufr_c2f_interface.f90 which wrap a number of native Fortran
+       subprograms and variables in the BUFRLIB.
 */
 
 #pragma once

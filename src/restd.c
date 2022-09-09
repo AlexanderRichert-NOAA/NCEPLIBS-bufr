@@ -38,6 +38,7 @@
  * | 2004-08-18 | J. Ator | Original author |
  * | 2012-04-30 | J. Ator | Use long cast for ibit in sprintf stmt |
  * | 2021-08-18 | J. Ator | Use cwork to silence superfluous GNU compiler warnings |
+ * | 2022-09-01 | J. Ator | Modernize C-Fortran interface |
 */
 
 void restd( f77int *lun, f77int *tddesc, f77int *nctddesc, f77int ctddesc[] )
@@ -46,9 +47,15 @@ void restd( f77int *lun, f77int *tddesc, f77int *nctddesc, f77int ctddesc[] )
 
     f77int desc, ncdesc, cdesc[MAXNC];
     f77int i, j, inum, itbd, ictbd;
-    f77int iscl, iref, ibit;
+    int iscl, iref, ibit;
 
     char tab, nemo[9], adn[7], cunit[25], cwork[31];
+
+/* tempstmts */
+    int temp_lun, temp_ictbd;
+
+    temp_lun = *lun;
+/* end tempstmts */
 
 /*
 **  How many child descriptors does *tddesc have?
@@ -114,7 +121,11 @@ void restd( f77int *lun, f77int *tddesc, f77int *nctddesc, f77int ctddesc[] )
 **		desc is a local Table B descriptor, so precede it with
 **		a 206YYY operator in the output list.
 */ 
-		nemtbb( lun, &ictbd, cunit, &iscl, &iref, &ibit, 25 );
+
+/* tempstmts */
+		temp_ictbd = ictbd;
+/* end tempstmts */
+		nemtbb_f( temp_lun, temp_ictbd, cunit, 25, &iscl, &iref, &ibit );
 		sprintf( cwork, "%c%c%c%03ld", '2', '0', '6', (long) ibit );
 		strncpy( adn, cwork, 6 ); adn[6] = '\0';
 		wrdesc( ifxy( adn, 7 ), ctddesc, nctddesc );

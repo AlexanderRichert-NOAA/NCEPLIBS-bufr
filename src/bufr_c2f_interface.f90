@@ -1,12 +1,12 @@
 !> @file
-!> @brief Enable a number of BUFRLIB subprograms and variables to be accessed
-!>        via wrapper functions from C and C++ based application programs.
+!> @brief Enable a number of Fortran BUFRLIB subprograms and variables to be accessed
+!>        via wrapper functions from C and C++ application programs.
 !>
 !> @author Ronald Mclaren
 !> @date 2020-07-29
 
 !> This module contains functions which wrap Fortran BUFRLIB functions and
-!> variables so they can be used from within C and C++ based apps. The
+!> variables so they can be used from within C and C++ application programs. The
 !> signatures of the public functions match their Fortran equivalents, as
 !> shown within the documentation for each of the individual functions.
 !>
@@ -18,7 +18,7 @@
 !> @author Ronald Mclaren
 !> @date 2020-07-29
 !>
-module bufr_c_interface_mod
+module bufr_c2f_interface
 
   use iso_c_binding
 
@@ -659,4 +659,4 @@ subroutine delete_table_data_c() bind(C, name='delete_table_data_f')
   if (allocated(jmpb_f)) deallocate(jmpb_f)
 end subroutine delete_table_data_c
 
-end module bufr_c_interface_mod
+end module bufr_c2f_interface
