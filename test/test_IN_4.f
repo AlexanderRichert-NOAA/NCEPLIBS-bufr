@@ -12,7 +12,7 @@
 
 	INTEGER		ibfmg ( MXBFD4 )
 
-	INTEGER*4	nbyt, ierr
+	INTEGER*4	mxmb, nbyt, ierr
 
 	CHARACTER	cmgtag*8, bfmg(MXBF), cds3(MXDS3)*6,
      +			tag1*8, tag2*8, tag3*8
@@ -47,7 +47,8 @@ C*	Open the test file.
 
 C*	Read the BUFR message from the BUFR file.
 
-	CALL CRBMG_C ( bfmg, MXBF, nbyt, ierr )
+	mxmb = MXBF
+	CALL CRBMG_C ( bfmg, mxmb, nbyt, ierr )
 	IF ( ierr .eq. 0 ) THEN
 	    print *, '         CRBMG_C -> OK'
 
