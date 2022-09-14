@@ -1,15 +1,7 @@
 /** @file
- *  @brief Define signatures to enable a number of BUFRLIB
- *  subprograms to be called directly from C application programs.
+ *  @brief Define signatures and declare macros for use throughout the C portion of the BUFRLIB.
  *
- *  <p>This header file defines the signatures for all
- *  BUFRLIB subprograms which are native C functions, or which are
- *  native Fortran subroutines but can be called directly from C
- *  application programs without the use of wrapper functions.
- *  This header file also contains macros used throughout the C
- *  portion of the BUFRLIB.
- *
- *  @author J.Ator
+ *  @author J. Ator
  *  @date 2003-11-04
  */
 
@@ -19,6 +11,8 @@
 #include <ctype.h>
 
 #include "bufr_interface.h"
+
+int icvidx ( int, int, int );
 
 #define NFILES @NFILES@ 
 #define MAXCD @MAXCD@
@@ -49,7 +43,6 @@
 #define gets1loc   gets1loc_
 #define ibfms      ibfms_
 #define ichkstr	   ichkstr_
-#define icvidx	   icvidx_
 #define ifxy	   ifxy_
 #define igetntbi   igetntbi_
 #define igetprm    igetprm_
@@ -113,7 +106,6 @@ void elemdx( char *, f77int *, size_t );
 void gets1loc( char *, f77int *, f77int *, f77int *, f77int *, size_t );
 f77int ibfms( f77r8 * );
 f77int ichkstr ( char *, char *, f77int *, size_t, size_t );
-f77int icvidx ( f77int *, f77int *, f77int * );
 f77int ifxy( char *, size_t );
 f77int igetntbi( f77int *, char *, size_t );
 f77int igetprm( char *, size_t );

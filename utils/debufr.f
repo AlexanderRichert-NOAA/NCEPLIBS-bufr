@@ -82,11 +82,13 @@ C> | 2018-03-01 | J. Ator | Added print of data types and subtypes from code and
 C> | 2018-09-05 | J. Ator | Added prmstg argument |
 C> | 2019-02-01 | J. Ator | Remove limit on length of prmstg |
 C> | 2021-02-24 | J. Ator | Use all formatted writes, for consistent output between builds using 4-byte vs. 8-byte integers |
+C> | 2022-09-13 | J. Ator | Modernize C-Fortran interface |
 C>
 	SUBROUTINE FDEBUFR ( ofile, tbldir, lentd, tblfil, prmstg,
      +			     basic, forcemt, cfms )
 
 	USE Share_Table_Info
+	USE bufr_interface
 
 	PARAMETER ( MXBF = 2500000 )
 	PARAMETER ( MXBFD4 = MXBF/4 )
@@ -141,7 +143,7 @@ C	Initialize some other values.
 
 C	    Get the next message from the input BUFR file.
 
-	    CALL CRBMG ( bfmg, MXBF, nbyt, ierr )
+	    CALL CRBMG_C ( bfmg, MXBF, nbyt, ierr )
 
 	    IF ( ierr .ne. 0 )  THEN
 
@@ -152,7 +154,7 @@ C	    Get the next message from the input BUFR file.
 		ELSE
 		    WRITE  ( UNIT = 51, FMT = '( /, 2A, I4 )' )
      +		      'Error while reading BUFR file; the return code ',
-     +		      'from CRBMG = ', ierr
+     +		      'from CRBMG_C = ', ierr
 		ENDIF
 
 		IF ( ( basic .eq. 'N' ) .and. ( opened .eq. 'Y' ) ) THEN

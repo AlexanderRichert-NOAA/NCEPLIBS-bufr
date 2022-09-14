@@ -1,38 +1,28 @@
 /** @file
- *  @brief Store information about a standard Table D descriptor
- *  within internal DX BUFR tables.
+ *  @brief Store information about a standard Table D descriptor within internal DX BUFR tables.
  */
 
 #include "bufrlib.h"
 #include "mstabs.h"
 
 /**
- * Given the bit-wise (integer) representation of a WMO-standard
- * Table D descriptor, this subroutine uses the master BUFR tables
- * to store all of the necessary information for that descriptor
- * within the internal DX BUFR tables.  Any child descriptors which
- * are themselves Table D descriptors are automatically resolved via
+ * Given the bit-wise (integer) representation of a WMO-standard Table D descriptor, this subroutine uses the
+ * master BUFR tables to store all of the necessary information for that descriptor within the internal DX BUFR
+ * tables.  Any child descriptors which are themselves Table D descriptors are automatically resolved via
  * a recursive call to this same subroutine.
  *
  * @author J. Ator
  * @date 2009-03-23
  *
- * @param[in] lun -- f77int*: Internal Fortran I/O stream index
- *                   associated with BUFR file
- * @param[in,out] irepct -- f77int*: Replication sequence counter for
- *                          the current master table; used internally
- *                          to keep track of which sequence names have
- *                          already been defined, and thereby avoid
- *                          contention within the internal DX BUFR
- *                          Table D
- * @param[in] idn -- f77int*: Bit-wise representation of FXY value for
- *                   WMO-standard Table D descriptor
+ * @param[in] lun -- f77int*: Internal Fortran I/O stream index associated with BUFR file
+ * @param[in,out] irepct -- f77int*: Replication sequence counter for the current master table; used internally
+ *                          to keep track of which sequence names have already been defined, and thereby avoid
+ *                          contention within the internal DX BUFR Table D
+ * @param[in] idn -- f77int*: Bit-wise representation of FXY value for WMO-standard Table D descriptor
  * @param[in] nemo -- char[8]: Mnemonic corresponding to idn
  * @param[in] cseq -- char[55]: Description corresponding to idn
- * @param[in] cdesc -- f77int*: Array of WMO-standard child descriptors
- *                     equivalent to idn
- * @param[in] ncdesc -- f77int*: Number of WMO-standard child descriptors
- *                      in cdesc
+ * @param[in] cdesc -- f77int*: Array of WMO-standard child descriptors equivalent to idn
+ * @param[in] ncdesc -- f77int*: Number of WMO-standard child descriptors in cdesc
  *
  * <b>Program history log:</b>
  * | Date | Programmer | Comments |
@@ -50,10 +40,12 @@ void stseq( f77int *lun, f77int *irepct, f77int *idn, char nemo[8],
 	    char cseq[55], f77int cdesc[], f77int *ncdesc )
 {
     f77int i, j, nb, nd, ipt, ix, iy, iret, nbits;
-    f77int i0 = 0, imxcd, rpidn, pkint, ilen;
+    f77int rpidn, pkint, ilen;
 
     char tab, adn[7], adn2[7], nemo2[9], units[10], errstr[129];
     char rpseq[56], card[80], cblk = ' ';
+
+    int imxcd;
 
 /*
 **  The following variable is declared as automatic so that a local
@@ -119,7 +111,7 @@ void stseq( f77int *lun, f77int *irepct, f77int *idn, char nemo[8],
 		sprintf( nemo2, "RPSEQ%.3lu", ( unsigned long ) *irepct );
 
 		stseq( lun, irepct, &rpidn, nemo2, rpseq,
-		    &MSTABS_BASE(idefxy)[icvidx(&ipt,&i0,&imxcd)],
+		    &MSTABS_BASE(idefxy)[icvidx((int)ipt,0,imxcd)],
 		    &MSTABS_BASE(ndelem)[ipt] );
 		pkint = rpidn;
 
@@ -130,7 +122,7 @@ void stseq( f77int *lun, f77int *irepct, f77int *idn, char nemo[8],
 */
 		stseq( lun, irepct, &cdesc[i], &MSTABS_BASE(cdmnem)[ipt][0],
 		    &MSTABS_BASE(cdseq)[ipt][0],
-		    &MSTABS_BASE(idefxy)[icvidx(&ipt,&i0,&imxcd)],
+		    &MSTABS_BASE(idefxy)[icvidx((int)ipt,0,imxcd)],
 		    &MSTABS_BASE(ndelem)[ipt] );
 		pkint = cdesc[i];
 	    }
@@ -345,7 +337,7 @@ void stseq( f77int *lun, f77int *irepct, f77int *idn, char nemo[8],
 		nummtb( &cdesc[i], &tab, &ipt );
 	    	stseq( lun, irepct, &cdesc[i], &MSTABS_BASE(cdmnem)[ipt][0],
 		       &MSTABS_BASE(cdseq)[ipt][0],
-		       &MSTABS_BASE(idefxy)[icvidx(&ipt,&i0,&imxcd)],
+		       &MSTABS_BASE(idefxy)[icvidx((int)ipt,0,imxcd)],
 		       &MSTABS_BASE(ndelem)[ipt] );
 		pkint = cdesc[i];
 	    }

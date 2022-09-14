@@ -23,8 +23,8 @@ extern "C" {
     @brief Wraps fortran "open" statement so we can open a Fortran file
            from a C program.
 
-    @param unit - int: the integer to use as the fortran file unit
-    @param filepath - const char*: path to the file we want to open.
+    @param[in] unit - int: the integer to use as the fortran file unit
+    @param[in] filepath - const char*: path to the file we want to open.
 */
   void open_f(int unit, const char* filepath);
 
@@ -74,7 +74,7 @@ extern "C" {
 /** @author Ronald McLaren
     @date 2020-07-29
 
-    @brief Wraps BUFRLIB "ireadmg" subroutine.
+    @brief Wraps BUFRLIB "ireadmg" function.
 
     @param[in] bufr_unit - int: the fortran file unit number to read from
     @param[out] subset - char*: the subset string

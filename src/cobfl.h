@@ -9,18 +9,15 @@
  *  @date 2005-11-29
  */
 #ifdef UNDERSCORE
-#define cobfl      cobfl_
-#define crbmg      crbmg_
 #define cwbmg      cwbmg_
 #define ccbfl      ccbfl_
-#define rbytes     rbytes_
 #endif
 
-void cobfl( char *, char * );
+void cobfl( char *, char );
 void ccbfl( void );
-void crbmg( char *, f77int *, f77int *, f77int * );
+void crbmg( char *, int, int *, int * );
 void cwbmg( char *, f77int *, f77int * );
-f77int rbytes( char *, f77int *, f77int, f77int );
+int rbytes( char *, int, int, int );
 
 /** @var pbf
  *  File pointers

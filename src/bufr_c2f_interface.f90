@@ -187,7 +187,7 @@ end subroutine exitbufr_c
 !> @author Ronald McLaren
 !> @date 2020-07-29
 !>
-!> @brief Wraps BUFRLIB "ireadmg" subroutine.
+!> @brief Wraps BUFRLIB "ireadmg" function.
 !>
 !> @param[in] bufr_unit - c_int: the fortran file unit number to read from
 !> @param[out] c_subset - c_char: the subset string

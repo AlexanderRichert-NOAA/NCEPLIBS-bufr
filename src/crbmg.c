@@ -1,51 +1,43 @@
 /** @file
- *  @brief Read the next message from a BUFR file that was
- *  previously opened for reading via a C language interface.
+ *  @brief Read the next message from a BUFR file that was previously opened for reading via a C language interface.
  */
 #include "bufrlib.h"
 #include "cobfl.h"
 
 /** 
- *  This subroutine reads the next BUFR message from the system
- *  file that was opened via the most recent call to subroutine
- *  cobfl() with io = 'r'.
+ *  This subroutine reads the next BUFR message from the system file that was opened via the most recent call to
+ *  subroutine cobfl() with io = 'r'.
  *  
  *  @author J. Ator
  *  @date 2005-11-29
  *
- *  @param[in] mxmb    -- f77int*: Dimensioned size (in bytes) of
- *                        bmg; used by the subroutine to ensure that
- *                        it doesn't overflow the bmg array
+ *  @param[in] mxmb    -- int: Dimensioned size (in bytes) of bmg; used by the subroutine to ensure that it
+ *                        doesn't overflow the bmg array
  *  @param[out] bmg    -- char*: BUFR message
- *  @param[out] nmb    -- f77int*: Size (in bytes) of BUFR message
- *                        in bmg
- *  @param[out] iret   -- f77int*: return code
+ *  @param[out] nmb    -- int*: Size (in bytes) of BUFR message in bmg
+ *  @param[out] iret   -- int*: return code
  *                         - 0 = normal return
  *                         - 1 = overflow of bmg array
- *                         - 2 = "7777" indicator not found in
- *                               expected location 
- *                         - -1 = end-of-file encountered while
- *                               reading
+ *                         - 2 = "7777" indicator not found in expected location 
+ *                         - -1 = end-of-file encountered while reading
  *                         - -2 = I/O error encountered while reading
  *
- * <p>This subroutine is designed to be easily callable from
- * application program written in either C or Fortran.
+ * <p>This subroutine is designed to be easily callable from application program written in either C or Fortran.
  *
- * <p>The file from which messages are to be read must have already
- * been opened for reading via a previous call to subroutine cobfl()
- * with io = 'r'.
+ * <p>The file from which messages are to be read must have already been opened for reading via a previous call to
+ * subroutine cobfl() with io = 'r'.
  *
- * <p>Any messages read that were encoded according to BUFR edition 0
- * or BUFR edition 1 are automatically converted to BUFR edition 2
- * before being returned by this subroutine.
+ * <p>Any messages read that were encoded according to BUFR edition 0 or BUFR edition 1 are automatically converted
+ * to BUFR edition 2 before being returned by this subroutine.
  *
  *  <b>Program history log:</b>
  *  | Date | Programmer | Comments |
  *  | -----|------------|----------|
  *  | 2005-11-29 | J. Ator | Original author |
+ *  | 2022-09-01 | J. Ator | Modernize C-Fortran interface |
  *
  */
-void crbmg( char *bmg, f77int *mxmb, f77int *nmb, f77int *iret )
+void crbmg( char *bmg, int mxmb, int *nmb, int *iret )
 {
     f77int i1 = 1, i2 = 2, i3 = 3, i4 = 4, i24 = 24;
     f77int wkint[2];
@@ -65,7 +57,7 @@ void crbmg( char *bmg, f77int *mxmb, f77int *nmb, f77int *iret )
 /*
 **  Initialize the first 4 characters of the output array to blanks.
 */
-    if ( *mxmb < 4 ) {
+    if ( mxmb < 4 ) {
 	*iret = 1;
 	return;
     }
@@ -135,13 +127,13 @@ void crbmg( char *bmg, f77int *mxmb, f77int *nmb, f77int *iret )
 **	Expand Section 0 from 4 bytes to 8 bytes, then encode the message length
 **	and new edition number (i.e. 2) into the new (expanded) Section 0.
 */
-	if ( *nmb + 4 > *mxmb ) {
+	if ( *nmb + 4 > mxmb ) {
 	    *iret = 1;
 	    return;
         }
 	memmove( &bmg[8], &bmg[4], *nmb-4 );
 	*nmb += 4;
-	ipkm( &bmg[4], &i3, nmb, 3 );
+	ipkm( &bmg[4], &i3, (f77int *) nmb, 3 );
 	ipkm( &bmg[7], &i1, &i2, 1 );
     }
 /*

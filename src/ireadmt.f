@@ -38,6 +38,7 @@ C> | 2009-03-23 | J. Ator  | Original author |
 C> | 2014-11-25 | J. Ator  | Add call to cpmstabs() for access to master table information within C when using dynamically-allocated arrays |
 C> | 2017-10-13 | J. Ator  | Add functionality to check whether new master tables need to be read (this functionality was previously part of subroutine reads3()) |
 C> | 2018-04-09 | J. Ator  | Only read master B and D tables when Section 3 is being used for decoding |
+C> | 2022-09-01 | J. Ator  | Modernize C-Fortran interface |
 C>
 	INTEGER FUNCTION IREADMT ( LUN )
 
@@ -51,6 +52,8 @@ C>
 	USE MODA_RDMTB
 	USE MODA_SC3BFR
 
+	USE BUFRLIB
+
 	COMMON /QUIET/  IPRT
 	COMMON /MSTINF/ LUN1, LUN2, LMTD, MTDIR
 	COMMON /TABLEF/ CDMF
@@ -61,6 +64,8 @@ C>
 	CHARACTER*128	BORT_STR
 	CHARACTER*132	STDFIL,LOCFIL
 	LOGICAL		ALLSTD
+
+	INTEGER*4	IM1, JM1, MY_MAXCD
 
 C*      Initializing the following value ensures that new master tables
 C*      are read during the first call to this subroutine.
@@ -189,9 +194,12 @@ C*	  Read the master Table D files.
      .			IDMT, IDMTV, IDOGCE, IDLTV,
      .			NMTD, IDFXYN, CDMNEM, CMDSCD, CDSEQ,
      .			NDELEM, IEFXYN, CEELEM )
+	  MY_MAXCD = MAXCD
 	  DO I = 1, NMTD
 	    DO J = 1, NDELEM(I)
-	      IDX = ICVIDX ( I-1, J-1, MAXCD ) + 1
+	      IM1 = I-1
+	      JM1 = J-1
+	      IDX = ICVIDX_C ( IM1, JM1, MY_MAXCD ) + 1
 	      IDEFXY(IDX) = IEFXYN(I,J)
 	    ENDDO
 	  ENDDO

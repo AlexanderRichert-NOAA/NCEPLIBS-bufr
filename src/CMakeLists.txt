@@ -5,7 +5,7 @@ list(APPEND fortran_src
   modv_MAXSS.f modv_MAXTBA.f modv_MAXTBB.f modv_MAXTBD.f modv_MXBTM.f modv_MXBTMSE.f modv_MXCDV.f
   modv_MXCNEM.f90 modv_MXCSB.f modv_MXDXTS.f modv_MXH4WLC.f90 modv_MXLCC.f modv_MXMSGL.f modv_MXMTBB.f
   modv_MXMTBD.f modv_MXMTBF.f modv_MXNAF.f90 modv_MXNRV.f modv_MXRST.f modv_MXS.f90 modv_MXS01V.f
-  modv_MXTAMC.f modv_MXTCO.f modv_NFILES.f90
+  modv_MXTAMC.f modv_MXTCO.f modv_NFILES.f90 bufrlib.f90 bufr_interface.f90
   moda_bitbuf.F moda_bitmaps.F moda_bufrmg.F moda_bufrsr.F moda_comprs.F moda_comprx.F moda_dscach.F
   moda_h4wlc.F moda_idrdm.F moda_ival.F moda_ivttmp.F moda_lushr.F moda_mgwa.F moda_mgwb.F moda_msgcwd.F
   moda_msglim.F moda_msgmem.F moda_mstabs.F moda_nmikrp.F moda_nrv203.F moda_nulbfr.F moda_rdmtb.F

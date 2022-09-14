@@ -1,3 +1,4 @@
+	use bufr_interface
 
 	PARAMETER	( MXBF = 20000 )
 	PARAMETER	( MXBFD4 = MXBF/4 )
@@ -9,6 +10,8 @@
 	REAL*8		r8arr ( MXR8PM, MXR8LV )
 
 	INTEGER		ibfmg ( MXBFD4 )
+
+	INTEGER*4	nbyt, ierr
 
 	CHARACTER	smidstg*9, softvstg*12, cmgtag*8,
      +			bfmg(MXBF), cds3(MXDS3)*6, tagpr*8,
@@ -23,13 +26,13 @@ C*----------------------------------------------------------------------
 
 	print *, '----------------------------------------------------'
 	print *, 'testing BUFRLIB: reading IN_1'
-	print *, '  using CRBMG with OPENBF IO = ''SEC3'''
+	print *, '  using CRBMG_C with OPENBF IO = ''SEC3'''
 	print *, '----------------------------------------------------'
 
 C*	Open the test file.
 
-	CALL COBFL ( filnam, filost )
-	print *, '         COBFL -> OK'
+	CALL COBFL_C ( filnam, filost )
+	print *, '         COBFL_C -> OK'
 
 	CALL DATELEN  ( 10 )
 
@@ -43,9 +46,9 @@ C*	Open the test file.
 
 C*	Read the BUFR message from the BUFR file.
 
-	CALL CRBMG ( bfmg, MXBF, nbyt, ierr )
+	CALL CRBMG_C ( bfmg, MXBF, nbyt, ierr )
 	IF ( ierr .eq. 0 ) THEN
-	    print *, '         CRBMG -> OK'
+	    print *, '         CRBMG_C -> OK'
 
 	    IF ( ( IUPBS01 ( ibfmg, 'MTYP' ) .eq. 2 ) .and.
      +		 ( IUPBS01 ( ibfmg, 'MTV'  ) .eq. 14 ) .and.

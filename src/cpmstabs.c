@@ -55,7 +55,7 @@ void cpmstabs(  f77int *pnmtb,
 		f77int *pidefxy, f77int *maxcd )
 {
 
-    f77int ii, jj, idx;
+    int ii, jj, idx;
 
     MSTABS_BASE(nmtb) = *pnmtb;
     for ( ii = 0; ii < *pnmtb; ii++ ) {
@@ -83,7 +83,7 @@ void cpmstabs(  f77int *pnmtb,
 	MSTABS_BASE(idfxyn)[ii] = pidfxyn[ii];
 	MSTABS_BASE(ndelem)[ii] = pndelem[ii];
 	for ( jj = 0; jj < pndelem[ii]; jj++ ) {
-	    idx = icvidx( &ii, &jj, maxcd );
+	    idx = icvidx( ii, jj, (int) *maxcd );
 	    MSTABS_BASE(idefxy)[idx] = pidefxy[idx];
 	}
 	for ( jj = 0; jj < 8; jj++ ) {
