@@ -49,6 +49,7 @@ jobs:
         path: bufr/build/*.html
 
     - uses: actions/upload-artifact@v2
+      if: always()
       with:
         name: gcovr-stuff
         path: /home/runner/work/NCEPLIBS-bufr/NCEPLIBS-bufr/bufr/build/test/CMakeFiles/test_IN_6_d.x.dir/*.gc*
