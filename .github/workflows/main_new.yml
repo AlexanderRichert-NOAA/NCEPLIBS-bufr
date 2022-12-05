@@ -47,4 +47,8 @@ jobs:
       with:
         name: test-coverage
         path: bufr/build/*.html
-      
+
+    - uses: actions/upload-artifact@v2
+      with:
+        name: gcovr-stuff
+        path: /home/runner/work/NCEPLIBS-bufr/NCEPLIBS-bufr/bufr/build/test/CMakeFiles/test_IN_6_d.x.dir/*.gc*
