@@ -119,5 +119,8 @@ program intest1
   ! Test idxmsg().
   if (idxmsg(1) .ne. 0) stop 20
 
+  ! Test cpdxmm to cover im8b case and end-of-file handling.
+  call cpdxmm(11)
+
   print *, 'SUCCESS!'
 end program intest1
