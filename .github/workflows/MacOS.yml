@@ -30,9 +30,9 @@ jobs:
     
     - name: install-deps
       run: |
-        pip3 install numpy
+        pip3 install numpy==1.26.3
         pip3 install meson
-        pip3 install ninja==1.26.3
+        pip3 install ninja
         pip3 install netCDF4
         pip3 install protobuf
         sudo ln -sf /usr/local/bin/gfortran-11 /usr/local/bin/gfortran
