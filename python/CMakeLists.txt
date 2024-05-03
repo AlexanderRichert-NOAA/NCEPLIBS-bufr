@@ -17,7 +17,8 @@ add_custom_command(
                    -m _bufrlib
                    -L${CMAKE_BINARY_DIR}/src
                    -lbufr_4
-                   --fcompiler=gfortran
+                   --f77exec=/usr/local/bin/gfortran
+                   --f90exec=/usr/local/bin/gfortran
   DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/_bufrlib.pyf"
 )
 
