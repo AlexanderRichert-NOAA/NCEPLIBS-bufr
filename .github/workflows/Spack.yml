@@ -11,6 +11,7 @@ on:
   push:
     branches:
     - develop
+    - cidebug9may24
   pull_request:
     branches:
     - develop
