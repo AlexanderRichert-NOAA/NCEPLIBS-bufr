@@ -1,0 +1,34 @@
+name: cdash
+on:
+  push:
+    branches:
+    - develop
+
+jobs:
+  cdash:
+    runs-on: ubuntu-latest
+
+    env:
+      FC: gfortran
+      CC: gcc
+      CDASH_TOKEN: ${{ secrets.CDASH_TOKEN }}
+
+    steps:
+
+    - name: cache-data
+      id: cache-data
+      uses: actions/cache@v4
+      with:
+        path: ~/data
+        key: data-19
+
+    - name: CDash
+      uses: NOAA-EMC/ci-cdash@develop
+      with:
+        extra-cmake-options: -DTEST_FILE_DIR=~/data
+
+    - name: cache-data
+      if: steps.cache-data.outputs.cache-hit != 'true'
+      run: |
+        mkdir ~/data
+        cp $GITHUB_WORKSPACE/coderoot/build/test/bufr-12.2.0.tgz ~/data
